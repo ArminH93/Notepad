@@ -24,7 +24,8 @@ import com.armin.notepad.db.TaskDbHelper;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity 
+{
 
     private static final String TAG = "MainActivity";
 
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     com.github.clans.fab.FloatingActionButton action_add_task;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -47,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
         mTaskListView = (ListView) findViewById(R.id.list_todo) ;
         mHelper = new TaskDbHelper(this);
 
-        action_add_task.setOnClickListener(new View.OnClickListener() {
+        action_add_task.setOnClickListener(new View.OnClickListener() 
+        {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view) 
+            {
                 final EditText taskEditText = new EditText(MainActivity.this);
                 taskEditText.setSingleLine(false);
                 taskEditText.setLines(4);
@@ -80,7 +83,8 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-    public void deleteTask(View view) {
+    public void deleteTask(View view) 
+    {
         View parent = (View) view.getParent();
         TextView taskTextView = (TextView) parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTextView.getText());
@@ -93,29 +97,32 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Notiz gelöscht", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateUI() {
+    private void updateUI() 
+    {
         ArrayList<String> taskList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
         Cursor cursor = db.query(TaskContract.TaskEntry.TABLE,
                 new String[]{TaskContract.TaskEntry._ID, TaskContract.TaskEntry.COL_TASK_TITLE},
                 null, null, null, null, null);
+        
         while (cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(TaskContract.TaskEntry.COL_TASK_TITLE);
             taskList.add(cursor.getString(idx));
-        }
-
-        if (mAdapter == null) {
+    }
+        if (mAdapter == null) 
+        {
             mAdapter = new ArrayAdapter<>(this,
                     R.layout.item_todo,
                     R.id.task_title,
                     taskList);
             mTaskListView.setAdapter(mAdapter);
-        } else {
+        } 
+        else 
+        {
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
         }
-
         cursor.close();
         db.close();
     }
