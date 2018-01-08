@@ -105,7 +105,8 @@ public class MainActivity extends AppCompatActivity
                 new String[]{TaskContract.TaskEntry._ID, TaskContract.TaskEntry.COL_TASK_TITLE},
                 null, null, null, null, null);
         
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()) 
+        {
             int idx = cursor.getColumnIndex(TaskContract.TaskEntry.COL_TASK_TITLE);
             taskList.add(cursor.getString(idx));
     }
